@@ -6,6 +6,7 @@
 //			Delete At Position,
 //			Count,
 //			Display
+//			Reverse Linked List
 
 
 #include<stdio.h>
@@ -252,6 +253,30 @@ void DeleteAtPosition(PPNODE Head,int pos)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void ReverseNodes(PPNODE Head)
+{
+	if(*Head ==NULL)
+	{
+		printf("\nThere is no node in Linked list\n");
+		return;
+	}
+	
+	PNODE temp = *Head;
+	PNODE current = *Head,previous =NULL ;
+	
+	while(temp != NULL)
+	{
+		temp = temp->next;
+		current -> next = previous;
+		previous = current;
+		current = temp;
+	}
+	*Head = previous;
+	Display(*Head);
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void LinePrint()
 {
 printf("\n____________________________________________________________________\n");	 			
@@ -264,7 +289,7 @@ int main()
 	PNODE first = NULL;
 	printf("\n________________Vishal Singly Linked List____________________\n\n");
 	printf("\n/////////////////////////////////////////////////////////////////////////\n");
-	printf("\n1.Insert First\n2.Insert Last\n3.Delete First\n4.Delete Last\n5.Insert At Position\n6.Delete At Position\n7.Display\n8.Count Nodes\n0.Exit\n");
+	printf("\n1.Insert First\n2.Insert Last\n3.Delete First\n4.Delete Last\n5.Insert At Position\n6.Delete At Position\n7.Display\n8.Count Nodes\n9.Reverse Linked List\n0.Exit\n");
 	printf("\n/////////////////////////////////////////////////////////////////////////\n");	
 	int choice = 1,num=0,pos=0;
 	
@@ -329,6 +354,11 @@ int main()
 				
 				LinePrint();
 				break;
+			
+			case 9:
+				ReverseNodes(&first);
+				LinePrint();
+				break;
 				
 			case 0:
 				printf("\n_________Thank you for using this Singly linked List__________\n\n");
@@ -343,7 +373,6 @@ int main()
 
 	return 0;
 }
-
 
 
 
