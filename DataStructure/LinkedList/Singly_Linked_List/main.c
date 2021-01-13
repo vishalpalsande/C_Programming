@@ -365,7 +365,7 @@ int main()
 				break;
 			
 			default:
-				printf("Invalid Choice entered\nNote: Please Entered choice between 1to 8 or 0 for Exit");
+				printf("Invalid Choice entered\nNote: Please Entered choice between 1 to 9 or 0 for Exit");
 				LinePrint();
 				break;
 		}
