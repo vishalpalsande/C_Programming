@@ -262,32 +262,27 @@ void DeleteAtPosition(PPNODE Head,int pos)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void ReversePrint(PNODE Head)
+void ReverseNodes(PPNODE Head)
 {
-	if( (Head) == NULL)
+	if( *Head == NULL)
 	{
 		printf("\nThere is no node in LinkedList for Reverse\n");
 		return;
 	}
 	
-	if(Head->next == NULL)
-		printf("|%d| <=> NULL",Head->data);
-	else
+	PNODE temp = *Head,current =*Head,previous = NULL;
+	
+	while(temp != NULL)
 	{
-		PNODE temp = Head;
-		while(temp->next != NULL)
-		{
-			temp = temp->next;
-		}
-		
-		while(temp != NULL)
-		{
-			printf("|%d| <=> ",temp->data);
-			temp = temp->prev;
-		}
-		printf("NULL\n");
+		temp = temp->next;
+		current -> next = previous;
+		current -> prev = temp;
+		previous = current;
+		current = temp;
 	}
-
+	
+	*Head = previous;
+	Display(*Head);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,7 +364,7 @@ int main()
 				break;
 				
 			case 9:
-				ReversePrint(first);
+				ReverseNodes(&first);
 				LinePrint();
 				break;
 				
@@ -386,7 +381,6 @@ int main()
 			
 	return 0;
 }
-
 
 
 
