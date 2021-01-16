@@ -182,7 +182,7 @@ void InsertAtPosition(PPNODE Head,int pos,int num)
 	int size = Count(*Head);
 	PNODE temp = NULL, newn=NULL;
 	
-	if(pos > size || pos<=0)
+	if(pos > size+1 || pos<=0)
 	{	
 		printf("Invalid postion Entered\nNote: Please Entered postion between 1 to %d\n",size);
 		return;
@@ -193,7 +193,7 @@ void InsertAtPosition(PPNODE Head,int pos,int num)
 		InsertFirst(Head, num);
 	}
 	else
-	if(pos == size)
+	if(pos == size+1)
 	{
 		InsertLast(Head, num);
 	}
