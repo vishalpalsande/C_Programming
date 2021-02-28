@@ -7,6 +7,9 @@
 //			Count,
 //			Display
 //			Reverse Linked List
+//			Sorting Nodes
+//			Find Third Last Node
+//			Find Middle Node
 
 
 #include<stdio.h>
@@ -34,14 +37,13 @@ void InsertFirst(PPNODE Head, int no)
 	if( *Head == NULL)
 	{
 		*Head = newn;
-		printf("\nInserted Successfully\n");
 	}
 	else
 	{
 		newn->next = *Head;
 		*Head = newn;
-		printf("\nInserted Successfully\n");
 	}
+	printf("\nInserted Successfully\n");
 }	
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +59,6 @@ void InsertLast(PPNODE Head, int no)
 	if(*Head == NULL)
 	{
 		*Head = newn;
-		printf("\nInserted Successfully\n");
 	}
 	else
 	{
@@ -66,8 +67,8 @@ void InsertLast(PPNODE Head, int no)
 			temp = temp -> next;
 		}
 		temp -> next = newn;
-		printf("\nInserted Successfully\n");
 	}
+	printf("\nInserted Successfully\n");
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,10 +105,9 @@ void DeleteLast(PPNODE Head)
 	else
 	if((*Head)->next == NULL)
 	{
-		temp = (*Head);
+		printf("%d node, deleted Successfully\n",(*Head)->data);
+		free(*Head);
 		*Head = NULL;
-		printf("%d node, deleted Successfully\n",temp->data);
-		free(temp);
 	}
 	else
 	{
@@ -277,6 +277,115 @@ void ReverseNodes(PPNODE Head)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void SortingNodes(PPNODE Head)
+{
+	if(*Head == NULL)
+	{
+		printf("\nThere is no node in Linked list\n");
+		return;
+	}
+	
+	PNODE temp = *Head;
+	PNODE current = NULL;
+	
+	int size = 0;
+	size = Count(*Head);
+	int x=1;
+	//printf("%d",temp->data);
+	for(int i=0; x!=0 && i<size;  i++)
+	{
+		x=0;
+		temp = *Head;
+		for(int j = 0; j<size-1-i; j++)
+		{
+			if( (temp->data) > (temp->next->data))
+			{
+				//printf("%d",temp->data);
+				current -> data = temp->data;
+				temp -> data = temp -> next -> data;		
+				temp -> next -> data = current -> data;
+				x=1;
+			}
+			temp = temp->next;
+		}
+	}		
+}
+	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int ThirdLastNode(PPNODE Head)
+{
+	if( (*Head == NULL) || ( (*Head) -> next == NULL ) || ( (*Head) ->next -> next == NULL ) )
+	{
+		printf("There is no third last node in linked list");
+		return -1;
+	}
+	
+	if( (*Head) ->next->next->next == NULL )			//11->null
+	{								//11->22->nulll    
+		return (*Head)->data;				//11->22->33->null
+	}								//11->22->33->44->55->null
+									//	     te ->ne ->ne->ne
+
+	PNODE temp = *Head;
+		
+	while(temp->next->next->next != NULL)
+	{
+		temp = temp->next;
+	}
+	
+	/*int len = Count(*Head);
+
+	
+	int i=1;
+	int n=3;
+	
+		//1,2
+	while(i <= len-n)
+	{
+		temp = temp->next;		//22,33	
+		printf("%d ",temp->data);
+		i++;
+	}*/
+	
+	return temp->data;
+	
+	//int num=temp->data;
+	
+	//return num;
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+int MiddleNode(PPNODE Head)
+{
+	if( (*Head == NULL) || ( (*Head) ->next == NULL) ||  ( (*Head) -> next-> next == NULL)  )
+	{
+		printf("There is no middle node in linked list\n");
+		return -1;
+	}
+
+	PNODE temp = *Head;
+	PNODE temp2 = *Head;
+	
+	//	11->22->33->null
+	//	11->22->33->44->null
+	//	11 -> 22 -> 33 -> 44 -> 55 -> null
+	//	t1t2  t1      t1 t2	t2
+	
+	while(temp2 -> next  != NULL && temp2->next->next != NULL)
+	{
+		temp2 = temp2->next->next;
+		temp = temp->next;
+	}
+	
+	return temp->data;
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void LinePrint()
 {
 printf("\n____________________________________________________________________\n");	 			
@@ -284,15 +393,16 @@ printf("\n____________________________________________________________________\n
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
 int main()
 {
 	PNODE first = NULL;
 	printf("\n________________Vishal Singly Linked List____________________\n\n");
 	printf("\n/////////////////////////////////////////////////////////////////////////\n");
-	printf("\n1.Insert First\n2.Insert Last\n3.Delete First\n4.Delete Last\n5.Insert At Position\n6.Delete At Position\n7.Display\n8.Count Nodes\n9.Reverse Linked List\n0.Exit\n");
+	printf("\n1.Insert First\n2.Insert Last\n3.Delete First\n4.Delete Last\n5.Insert At Position\n6.Delete At Position\n7.Display\n8.Count Nodes\n9.Reverse Linked List\n10.Sorting Nodes\n11. Find Third Last Node\n12.Find Middle Node\n0.Exit\n");
 	printf("\n/////////////////////////////////////////////////////////////////////////\n");	
 	int choice = 1,num=0,pos=0;
-	
 	while(choice != 0)
 	{
 		printf("\nEnter ur Choice: ");
@@ -360,12 +470,28 @@ int main()
 				LinePrint();
 				break;
 				
+			case 10:
+				SortingNodes(&first);
+				Display(first);
+				LinePrint();
+				break;
+				
+			case 11:
+				printf("3rd Last element is: %d\n",ThirdLastNode(&first));
+				LinePrint();
+				break;
+			
+			case 12:
+				printf("Middle Node is: %d\n",MiddleNode(&first));
+				LinePrint();
+				break;
+					
 			case 0:
 				printf("\n_________Thank you for using this Singly linked List__________\n\n");
 				break;
 			
 			default:
-				printf("Invalid Choice entered\nNote: Please Entered choice between 1 to 9 or 0 for Exit");
+				printf("Invalid Choice entered\nNote: Please Entered choice between 1to 10 or 0 for Exit");
 				LinePrint();
 				break;
 		}
